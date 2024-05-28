@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 6b80c44113277b9419d20c170db3a338
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Dune Rise
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: e315c66c1f0de4542859475469c0cbc0, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
