@@ -12,7 +12,7 @@ namespace RPG.SceneManagement
     {
         enum DestinationIdentifier
         {
-            A, B, C
+            A, B, C, D, E, F, G, H, I,
         }
 
         [SerializeField] int sceneToLoad = -1;

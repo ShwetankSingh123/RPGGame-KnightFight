@@ -6,13 +6,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using System.Runtime.Serialization.Formatters.Binary;
-
-
+using UnityEngine.UI;
 
 namespace RPG.Saving
 {
     public class SavingSystem : MonoBehaviour
     {
+        [Header("Menu Screen")]
+        [SerializeField] private GameObject loadingScreen;
+
+        [Header("Slider")]
+        [SerializeField] private Slider slider;
+
         public IEnumerator LoadLastScene(string saveFile)
         {
             Dictionary<string, object> state = LoadFile(saveFile);
@@ -21,8 +26,37 @@ namespace RPG.Saving
             {
                 buildIndex = (int)state["lastSceneBuildIndex"];
             }
-            yield return SceneManager.LoadSceneAsync(buildIndex);
+
+
+            //start
+            loadingScreen.SetActive(true);
+            StartCoroutine(LoadSceneMenu(buildIndex));
+            //end
+            
+            yield return new WaitForSeconds(200);
             RestoreState(state);
+        }
+        
+        IEnumerator LoadSceneMenu(int buildIndex)
+        {
+            
+            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(buildIndex);
+            print(buildIndex);
+            while (!loadOperation.isDone)
+            {
+                float progressValue = Mathf.Clamp01(loadOperation.progress / 0.9f);
+                print(progressValue);
+
+                slider.value = progressValue;
+                yield return null;
+            }
+            loadingScreen.SetActive(false);
+            print("loading screen set to false");
+        }
+
+        private void levelLoadingSystem(int buildIndex)
+        {
+            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(buildIndex);
         }
 
         public void Save(string saveFile)
