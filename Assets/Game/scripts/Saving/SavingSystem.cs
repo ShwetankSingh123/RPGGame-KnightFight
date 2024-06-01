@@ -30,10 +30,14 @@ namespace RPG.Saving
 
             //start
             loadingScreen.SetActive(true);
+            if (buildIndex == 0)
+            {
+                buildIndex++;
+            }
             StartCoroutine(LoadSceneMenu(buildIndex));
             //end
             
-            yield return new WaitForSeconds(200);
+            yield return new WaitForSeconds(1);
             RestoreState(state);
         }
         
@@ -63,6 +67,7 @@ namespace RPG.Saving
         {
             Dictionary<string, object> state = LoadFile(saveFile);
             CaptureState(state);
+            PlayerPrefs.SetInt("gameProgress", 1); //test
             SaveFile(saveFile, state);
         }
 

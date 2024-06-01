@@ -51,7 +51,7 @@ namespace RPG.SceneManagement
 
             
             savingWrapper.Save();
-
+            PlayerPrefs.SetInt("gameProgress", 1); //test 
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
 
             //remove control from new player

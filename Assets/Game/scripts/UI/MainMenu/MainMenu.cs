@@ -133,7 +133,7 @@ namespace RPG.MainMen
             //savingWrapper.Delete();
             Play("Scene01");
             File.Delete(Path.Combine(Application.persistentDataPath, "save" + ".sav"));  //this code is taken from SavingSystem.cs
-            PlayerPrefs.SetInt(ProgressKey, 1);
+            //PlayerPrefs.SetInt(ProgressKey, 1);  //test
 
         }
 
