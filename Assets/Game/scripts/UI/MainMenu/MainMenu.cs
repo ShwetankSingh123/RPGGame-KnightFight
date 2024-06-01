@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Cinemachine;
+using RPG.Saving;
 
 namespace RPG.MainMen
 {
@@ -24,23 +25,11 @@ namespace RPG.MainMen
         public Button newGameButton;
         public Button continueButton;
         SavingWrapper savingWrapper;
-
-        //static bool hasSpawned = false;
-
-        public CinemachineVirtualCamera currentCamera;
-
-
-
-
-        private void Awake()
-        {
-            //if (hasSpawned) { return; }
-
-            //SpawnPersistentObjects();
-            //hasSpawned = true;
-        }
+        SavingSystem savingSystem;
 
         
+
+        public CinemachineVirtualCamera currentCamera;
 
 
         private void Start()
@@ -67,7 +56,7 @@ namespace RPG.MainMen
             }
         }
 
-        public void Play(string sceneToLoad)
+        public void Play(int sceneToLoad)
         {
             loadingScreen.SetActive(true);
             menuScreen.SetActive(false);
@@ -78,6 +67,22 @@ namespace RPG.MainMen
 
         public void Exit()
         {
+            StartCoroutine(ExitLoad());
+            
+        }
+
+
+        IEnumerator ExitLoad()
+        {
+            loadingScreen.SetActive(true);
+            float progressValue = 0;
+            while (progressValue<1)
+            {
+                progressValue = progressValue + 0.3f;
+                slider.value = progressValue;
+            }
+            
+            yield return new WaitForSeconds(4);
             Application.Quit();
         }
 
@@ -86,14 +91,16 @@ namespace RPG.MainMen
 
         }
 
-        IEnumerator LoadLevelAsync(string sceneToLoad)
+        IEnumerator LoadLevelAsync(int sceneToLoad)
         {
+            print(sceneToLoad);
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneToLoad);
 
             while (!loadOperation.isDone)
             {
                 float progressValue = Mathf.Clamp01(loadOperation.progress / 0.9f);
                 slider.value = progressValue;
+                
                 yield return null;
             }
             loadingScreen.SetActive(false);
@@ -131,7 +138,7 @@ namespace RPG.MainMen
         {
             
             //savingWrapper.Delete();
-            Play("Scene01");
+            Play(1);
             File.Delete(Path.Combine(Application.persistentDataPath, "save" + ".sav"));  //this code is taken from SavingSystem.cs
             //PlayerPrefs.SetInt(ProgressKey, 1);  //test
 
@@ -145,9 +152,15 @@ namespace RPG.MainMen
             //Play(PlayerPrefs.GetString("SceneToLoad"));
 
             //savingWrapper.donebaby = true;
+            SavingSystem savingSystem = FindObjectOfType<SavingSystem>();
             SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
             StartCoroutine(savingWrapper.LoadLastScene());
+            print(savingSystem.GetBuildIndex());
+            loadingScreen.SetActive(true);
+            menuScreen.SetActive(false);
+            StartCoroutine(LoadLevelAsync(savingSystem.GetBuildIndex()));
 
+           
         }
 
         public void UpdateCamera(CinemachineVirtualCamera target)

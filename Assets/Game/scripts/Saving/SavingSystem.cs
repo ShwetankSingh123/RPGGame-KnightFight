@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.UI;
+using System;
 
 namespace RPG.Saving
 {
@@ -18,10 +19,20 @@ namespace RPG.Saving
         [Header("Slider")]
         [SerializeField] private Slider slider;
 
+
+        private int buildIndex;
+
+
+        public int GetBuildIndex()
+        {
+            return buildIndex;
+        }
+
+
         public IEnumerator LoadLastScene(string saveFile)
         {
             Dictionary<string, object> state = LoadFile(saveFile);
-            int buildIndex = SceneManager.GetActiveScene().buildIndex;
+            buildIndex = SceneManager.GetActiveScene().buildIndex;
             if (state.ContainsKey("lastSceneBuildIndex"))
             {
                 buildIndex = (int)state["lastSceneBuildIndex"];
@@ -29,21 +40,30 @@ namespace RPG.Saving
 
 
             //start
-            loadingScreen.SetActive(true);
+            
             if (buildIndex == 0)
             {
                 buildIndex++;
             }
-            StartCoroutine(LoadSceneMenu(buildIndex));
+            //StartCoroutine(LoadSceneMenu(buildIndex));
             //end
+            yield return buildIndex;
+            //yield return new WaitForSeconds(1);
+            StartCoroutine(RestoringState(state));
             
-            yield return new WaitForSeconds(1);
+        }
+
+        IEnumerator RestoringState(Dictionary<string, object> state)
+        {
+            yield return new WaitForSeconds(0);
+            print(state);
             RestoreState(state);
         }
-        
-        IEnumerator LoadSceneMenu(int buildIndex)
+
+        //used to load the new scene
+        IEnumerator LoadSceneMenu(int buildIndex) 
         {
-            
+            loadingScreen.SetActive(true);
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(buildIndex);
             print(buildIndex);
             while (!loadOperation.isDone)
@@ -58,10 +78,7 @@ namespace RPG.Saving
             print("loading screen set to false");
         }
 
-        private void levelLoadingSystem(int buildIndex)
-        {
-            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(buildIndex);
-        }
+        
 
         public void Save(string saveFile)
         {
