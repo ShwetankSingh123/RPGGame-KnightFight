@@ -17,9 +17,14 @@ namespace RPG.MainMen
         [SerializeField] private GameObject menuScreen;
         [SerializeField] private GameObject parentCanvas;
 
+        [Space(10)]
         [Header("Slider")]
         [SerializeField] private Slider slider;
 
+
+        [SerializeField] private GameObject creditContent;
+        [SerializeField] private float speed = 1f;
+        float verticalSpeed;
         private const string ProgressKey = "gameProgress";
         private string sceneToLoad = "SceneToLoad";
         public Button newGameButton;
@@ -34,6 +39,7 @@ namespace RPG.MainMen
 
         private void Start()
         {
+            
             currentCamera.Priority++;
             // Check if there is saved progress
             if (PlayerPrefs.HasKey(ProgressKey))
@@ -161,6 +167,25 @@ namespace RPG.MainMen
             StartCoroutine(LoadLevelAsync(savingSystem.GetBuildIndex()));
 
            
+        }
+
+
+        public void StartScroll()
+        {
+            StartCoroutine(DelayInStartSlide());
+            
+        }
+
+        IEnumerator DelayInStartSlide()
+        {
+            yield return new WaitForSeconds(5);
+            while (creditContent.transform.position.y < 500)
+            {
+                verticalSpeed = speed * Time.deltaTime;
+                creditContent.transform.position = creditContent.transform.position + new Vector3(0, verticalSpeed, 0);
+                
+            }
+
         }
 
         public void UpdateCamera(CinemachineVirtualCamera target)
