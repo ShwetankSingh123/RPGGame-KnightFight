@@ -36,8 +36,10 @@ namespace RPG.SceneManagement
             if (currentActivefade != null)
             {
                 StopCoroutine(currentActivefade);
+                
             }
             currentActivefade = StartCoroutine(FadeRoutine(target, time));
+            
             return currentActivefade;
         }
 
@@ -46,6 +48,7 @@ namespace RPG.SceneManagement
             while (!Mathf.Approximately(canvasGroup.alpha, target))
             {
                 canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, target, Time.deltaTime / time);
+                
                 yield return null;
             }
         }

@@ -46,28 +46,31 @@ namespace RPG.SceneManagement
 
             //remove player control
             playerController.enabled = false;
-
-            yield return fader.FadeOut(fadeOutTime); 
-
             
-            savingWrapper.Save();
-            PlayerPrefs.SetInt("gameProgress", 1); //test 
-            yield return SceneManager.LoadSceneAsync(sceneToLoad);
+            yield return fader.FadeOut(fadeOutTime);
+            print(fader.GetComponent<CanvasGroup>().alpha);
 
+            savingWrapper.Save();
+            
+            PlayerPrefs.SetInt("gameProgress", 1); //test 
+            
+            yield return SceneManager.LoadSceneAsync(sceneToLoad);
+            print("hello eror");
             //remove control from new player
             PlayerController newPlayerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
             newPlayerController.enabled = false;
             savingWrapper.Load();
             
             Portal otherPortal = GetOtherPortal();
+            
             UpdatePlayer(otherPortal);
-
+            print(fader.GetComponent<CanvasGroup>().alpha);
             savingWrapper.Save();
             print("fade out done");
             print(gameObject.name);
             yield return new WaitForSeconds(fadeWaitTime);            
             fader.FadeIn(fadeInTime);
-
+            
             //restore control
             newPlayerController.enabled = true;
             Destroy(gameObject);
@@ -79,10 +82,18 @@ namespace RPG.SceneManagement
             //player.transform.position = otherPoertal.spawnPoint.position;
             //player.GetComponent<NavMeshAgent>().Warp(otherPoertal.spawnPoint.position);
             //player.transform.rotation = otherPoertal.spawnPoint.rotation;
-            player.GetComponent<NavMeshAgent>().enabled = false;
-            player.transform.position = otherPortal.spawnPoint.position;
-            player.transform.rotation = otherPortal.spawnPoint.rotation;
-            player.GetComponent<NavMeshAgent>().enabled = true;
+            if (player != null)
+            {
+                player.GetComponent<NavMeshAgent>().enabled = false;
+                player.transform.position = otherPortal.spawnPoint.position;
+                player.transform.rotation = otherPortal.spawnPoint.rotation;
+                player.GetComponent<NavMeshAgent>().enabled = true;
+            }
+            else
+            {
+                print("player is not found");
+            }
+            
         }
 
         private Portal GetOtherPortal()
