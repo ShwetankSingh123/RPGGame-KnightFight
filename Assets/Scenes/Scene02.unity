@@ -1085,12 +1085,12 @@ PrefabInstance:
     - target: {fileID: 2657093678737513235, guid: 40603203f6495d646b42492a5bb84c76,
         type: 3}
       propertyPath: sceneToLoad
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6733178737716470850, guid: 40603203f6495d646b42492a5bb84c76,
         type: 3}
       propertyPath: m_Name
-      value: Portal
+      value: Portal scene03
       objectReference: {fileID: 0}
     - target: {fileID: 6733178737716470850, guid: 40603203f6495d646b42492a5bb84c76,
         type: 3}
@@ -1435,7 +1435,7 @@ PrefabInstance:
     - target: {fileID: 6733178737716470850, guid: 40603203f6495d646b42492a5bb84c76,
         type: 3}
       propertyPath: m_Name
-      value: Portal (1)
+      value: Portal scene01
       objectReference: {fileID: 0}
     - target: {fileID: 6733178737716470850, guid: 40603203f6495d646b42492a5bb84c76,
         type: 3}
