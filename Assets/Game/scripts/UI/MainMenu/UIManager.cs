@@ -53,6 +53,7 @@ public class UIManager : MonoBehaviour
     public void Continue()
     {
         menuScreen.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public void Option()
