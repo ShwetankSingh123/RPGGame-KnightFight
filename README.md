@@ -1,7 +1,10 @@
 <h1>RPG Game</h1>
 
+<h3> Youtube Video -- Gameplay </h3> 
+
 [![Watch the video](https://github.com/ShwetankSingh123/RPGGame-KnightFight/assets/74751132/89494ff8-f8c3-4dc4-99f4-aeba8ebbaa39)](https://www.youtube.com/watch?v=BqAf5eq9eLo)
 
+<h3> Screenshots </h3> 
 
 ![Screenshot 2024-06-28 093754](https://github.com/ShwetankSingh123/RPGGame-KnightFight/assets/74751132/9a4b22d8-3758-4f7e-8dda-cbe946895a16)
 
