@@ -11,20 +11,39 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (hasSpawned)
+        //if (hasSpawned)
+        //{
+        //    if (Input.GetKeyDown(KeyCode.Escape))
+        //    {
+        //        menuScreen.SetActive(false);
+        //        hasSpawned = false;
+        //        Time.timeScale = 1;
+        //    }
+        //}
+        //else
+        //{
+        //    if (Input.GetKeyDown(KeyCode.Escape))
+        //    {    
+        //        menuScreen.SetActive(true);
+        //        hasSpawned = true;
+        //        Time.timeScale = 0;
+        //    }
+        //}
+
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                menuScreen.SetActive(false);
-                hasSpawned = false;
-            }
-        }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            hasSpawned = !hasSpawned;
+            if (hasSpawned)
             {    
                 menuScreen.SetActive(true);
                 hasSpawned = true;
+                Time.timeScale = 0;
+            }
+            else
+            {
+                menuScreen.SetActive(false);
+                hasSpawned = false;
+                Time.timeScale = 1;
             }
         }
 
