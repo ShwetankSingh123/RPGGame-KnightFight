@@ -6,7 +6,7 @@ using GameDevTV.Utils;
 using RPG.Core;
 using RPG.Saving;
 using RPG.Stats;
-
+using System;
 
 namespace RPG.Attribute
 {
@@ -15,6 +15,11 @@ namespace RPG.Attribute
         [SerializeField] float regenerationPercentage = 70;
         [SerializeField] TakeDamageEvent takeDamage;
         [SerializeField] UnityEvent onDie;
+
+        //edit
+        public event Action isdead;
+        public event Action healthReduced;
+
 
         [System.Serializable]
         public class TakeDamageEvent : UnityEvent<float>
@@ -56,7 +61,13 @@ namespace RPG.Attribute
         {
             //print(gameObject.name + " took damage : " + damage);
             healthPoints.value = Mathf.Max(healthPoints.value - damage, 0);
-            
+
+
+
+            //TODO 
+            healthReduced?.Invoke();
+
+
             if (healthPoints.value == 0)
             {
                 AwardExperience(instigator);//put this after die
@@ -122,7 +133,7 @@ namespace RPG.Attribute
 
             GetComponent<Animator>().SetTrigger("die");
             GetComponent<ActionSchedular>().CancelCurrentAction();
-            
+            isdead?. Invoke();
         }
 
         public object CaptureState()

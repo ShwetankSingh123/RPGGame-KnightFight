@@ -15,16 +15,22 @@ namespace RPG.Attribute
         {
             health = GameObject.FindWithTag("Player").GetComponent<Health>();
             experience = GameObject.FindWithTag("Player").GetComponent<Experience>();
+            health.healthReduced += HealthReduce;
         }
         private void Update()
         {
+            
+        }
+
+        void HealthReduce()
+        {
             float healthOfPlayer = health.GetHealthPoints() / health.GetMaxHealthPoints();
-            if(healthOfPlayer <= 0)
+            if (healthOfPlayer <= 0)
             {
-                print("score : "+experience.GetPoints());
+                print("score : " + experience.GetPoints());
             }
             //GetComponent<Text>().text = string.Format("{0:0}%",health.GetPercentage());
-            GetComponent<Text>().text = string.Format("{0:0}/{1:0}",health.GetHealthPoints(),health.GetMaxHealthPoints());
+            GetComponent<Text>().text = string.Format("{0:0}/{1:0}", health.GetHealthPoints(), health.GetMaxHealthPoints());
         }
     }
 }

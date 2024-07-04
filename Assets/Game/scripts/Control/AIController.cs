@@ -55,13 +55,13 @@ namespace RPG.Control
         void Start()
         {
             guardPosition.ForceInit();
-            
+            health.isdead += Deadman;
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (health.IsDead()) { return; }
+            //if (health.IsDead()) { return; }
             if (IsAggrevated() && fighter.CanAttack(player))
             {
                 
@@ -78,6 +78,13 @@ namespace RPG.Control
                 //fighter.Cancel();
             }
             UpdateTimers();
+        }
+
+
+         void Deadman()
+        {
+            Destroy(this.gameObject);
+            //this.transform.gameObject.SetActive(false);
         }
 
         public void Aggrevate()
