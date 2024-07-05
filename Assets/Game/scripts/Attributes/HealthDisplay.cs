@@ -17,6 +17,12 @@ namespace RPG.Attribute
             experience = GameObject.FindWithTag("Player").GetComponent<Experience>();
             health.healthReduced += HealthReduce;
         }
+
+        private void Start()
+        {
+            HealthReduce();
+        }
+
         private void Update()
         {
             
